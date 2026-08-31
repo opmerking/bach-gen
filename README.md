@@ -2,6 +2,19 @@
 
 Evaluating and generating Bach chorales with a small transformer.
 
+## Setup
+
+**Dataset:** Download `jsb-chorales-16th.pkl` from [czhuang/JSB-Chorales-dataset](https://github.com/czhuang/JSB-Chorales-dataset) and place it in the repo root.
+
+**Dependencies:**
+```
+pip install torch numpy pandas matplotlib pretty_midi muspy music21 scipy
+```
+
+**Run order:** `1_training.ipynb` → `2_evaluation.ipynb`
+
+Training takes ~15 minutes on a 4GB GPU. The evaluation notebook runs on CPU. `gen_chorales.json` and `Bach_model.pt` are included so the evaluation notebook can be run without training first.
+
 ## Metric Validity Study
 
 Standard metrics for symbolic music generation — pitch-class entropy, scale consistency, polyphony, pitch range — are widely used to evaluate generative models. But do they actually measure musical quality?
@@ -51,16 +64,3 @@ Effect sizes reported as rank-biserial correlation |*r*|. Bold = significant aft
 Full results, interpretation, and discussion are in the [report](report.pdf).
 
 This work was completed as Assignment 3 for the course Generative Artificial Intelligence (IM1412) at the Open Universiteit and received a grade of **9.0/10**.
-
-## Setup
-
-**Dataset:** Download `jsb-chorales-16th.pkl` from [czhuang/JSB-Chorales-dataset](https://github.com/czhuang/JSB-Chorales-dataset) and place it in the repo root.
-
-**Dependencies:**
-```
-pip install torch numpy pandas matplotlib pretty_midi muspy music21 scipy
-```
-
-**Run order:** `1_training.ipynb` → `2_evaluation.ipynb`
-
-Training takes ~15 minutes on a 4GB GPU. The evaluation notebook runs on CPU. `gen_chorales.json` and `Bach_model.pt` are included so the evaluation notebook can be run without training first.
