@@ -48,8 +48,6 @@ Effect sizes reported as rank-biserial correlation |*r*|. Bold = significant aft
 | Boundary interval | **< 0.001** | **0.84** | 0.355 | 0.09 |
 | Cadence (Fisher's) | **0.001** | – | **< 0.001** | – |
 
-![Cadence quality across the three systems](figures/cadence_quality.png)
-
 Full results, interpretation, and discussion are in the [report](report.pdf).
 
 This work was completed as Assignment 3 for the course Generative Artificial Intelligence (IM1412) at the Open Universiteit and received a grade of **9.0/10**.
