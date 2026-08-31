@@ -69,4 +69,4 @@ Effect sizes reported as rank-biserial correlation |*r*|. Bold = significant aft
 
 Full results, interpretation, and discussion are in the [report](report.pdf).
 
-*This work was completed as Assignment 3 for the course Generative Artificial Intelligence (IM1412) at the Open University of the Netherlands, and received a grade of **9.0/10**.*
+*This work was completed as Assignment 3 for the course Generative Artificial Intelligence at the Open University of the Netherlands, and received a grade of **9.0/10**.*
