@@ -1,6 +1,6 @@
 # bach-gen
 
-Evaluating and generating Bach chorales with a small transformer.
+This project aims to investigate the validity of evaluation metrics in generative music literature. To do so, a small decoder-only transformer (~1.85M parameters) is trained on Johann Sebastian Bach chorales and evaluated on commonly used MusPy-based distributional metrics, as well as rule-based metrics predicated on conventions in historical counterpoint, which are introduced for this study. These metrics are tested on real Bach chorales, a set of shuffled Bach chorales that is created to test the metrics on their ability to distinguish sequential continuity, and a set of chorales generated with a small transformer trained on real Bach. 
 
 ## Setup
 
@@ -17,9 +17,19 @@ Training takes ~5 minutes on a 4GB GPU. The evaluation notebook requires `gen_ch
 
 ## Metric Validity Study
 
-Standard metrics for symbolic music generation — pitch-class entropy, scale consistency, polyphony, pitch range — are widely used to evaluate generative models. But do they actually measure musical quality?
+The chosen distributional metrics are widely used in symbolic music generation: pitch-class entropy, scale consistency, polyphony, pitch range.
 
-To find out, a small decoder-only transformer (~1.85M parameters) is trained on the [JSB Chorales dataset](https://github.com/czhuang/JSB-Chorales-dataset) and three test sets are compared:
+The rule-based metrics introduced for this study are:
+- **Voice crossing**: In chorales, the pitch of each voice should ideally be hierarchical at each timestep. The soprano should always be higher than the alto, etc. in accordance with SATB (soprano > alto > tenor > bass). This metric measures how often the voice registers are crossed.
+- **Parallel fifths**: When two voices remain a perfect fifth (7 semitones) or an octave/unison apart during consecutive distinct notes, they lose their independent melodies. Bach avoided this meticulously. This metric measures how often this occurs.
+- **Proper cadence**: In Bach chorales, the final chord is often a root-position major or minor triad, with the bass on the chord root, which gives a sense of resolution to the piece. This metric counts in how many chorales of a set this is the case. 
+- **Segment-boundary interval analysis**: Because in the set of shuffled chorales the connections between segments are broken, the structural cohesiveness should no longer be intact. To test for musical continuity, an analysis is performed that quantifies the jumps in pitch at segment boundaries for the soprano voice.
+
+The model is also tested on model likelihood.
+
+The model is trained on the [JSB Chorales dataset](https://github.com/czhuang/JSB-Chorales-dataset).
+
+Three test sets are compared:
 
 | Set | Description |
 |---|---|
@@ -27,13 +37,9 @@ To find out, a small decoder-only transformer (~1.85M parameters) is trained on 
 | **Shuffled** | The same 77 chorales with bars randomly reordered — locally identical to Bach, structurally destroyed |
 | **Generated** | 77 chorales sampled from the trained model |
 
-### Key finding
-
-Distributional metrics cannot distinguish shuffled Bach from real Bach (*p* ≈ 1 for all four). Counterpoint-based metrics introduced in this study — voice crossing, parallel fifths, cadence quality, boundary-interval analysis — separate the sets with effect sizes up to *r* = 0.85. Each metric family is blind to failures outside its own domain, making single-metric evaluation unreliable.
-
-![Box plots of metric distributions across the three systems](figures/metric_comparison_boxplots.png)
-
 ### Results
+
+Distributional metrics were found to be unable to distinguish real Bach from the shuffled set (*p* ≈ 1 for all four), and to have a relatively small effect size when comparing real Bach to the generated set. Rule-based metrics, by contrast, show strong discriminative power with effect sizes up to *r* = 0.85. 
 
 | Metric | Real Bach | Shuffled | Generated |
 |---|---|---|---|
@@ -44,6 +50,8 @@ Distributional metrics cannot distinguish shuffled Bach from real Bach (*p* ≈ 
 | Voice crossing rate | 0.021 | 0.021 | 0.142 |
 | Parallel fifths rate | 0.0004 | 0.0026 | 0.0059 |
 | Proper cadence | 97.4% | 80.5% | 22.1% |
+
+![Box plots of metric distributions across the three systems](figures/metric_comparison_boxplots.png)
 
 ### Statistical tests
 
@@ -63,4 +71,4 @@ Effect sizes reported as rank-biserial correlation |*r*|. Bold = significant aft
 
 Full results, interpretation, and discussion are in the [report](report.pdf).
 
-This work was completed as Assignment 3 for the course Generative Artificial Intelligence (IM1412) at the Open Universiteit and received a grade of **9.0/10**.
+This work was completed as Assignment 3 for the course Generative Artificial Intelligence (IM1412) at the Open University of the Netherlands, and received a grade of **9.0/10**.
