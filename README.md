@@ -41,6 +41,6 @@ Distributional metrics cannot distinguish shuffled Bach from real Bach (*p* ≈ 
 | Parallel fifths rate | 0.0004 | 0.0026 | 0.0059 |
 | Proper cadence | 97.4% | 80.5% | 22.1% |
 
-Full results, statistical tests (Mann–Whitney U with Holm–Bonferroni correction, Fisher's exact, rank-biserial effect sizes), and interpretation are in the [report](metric-study/report.pdf).
+Full results, statistical tests (Mann–Whitney U with Holm–Bonferroni correction, Fisher's exact, rank-biserial effect sizes), and interpretation are in the report.
 
 This work was completed as Assignment 3 for the course Generative Artificial Intelligence (IM1412) at the Open Universiteit and received a grade of **9.0/10**.
