@@ -27,8 +27,6 @@ The rule-based metrics introduced for this study are:
 
 The model is also tested on model likelihood.
 
-The model is trained on the [JSB Chorales dataset](https://github.com/czhuang/JSB-Chorales-dataset).
-
 Three test sets are compared:
 
 | Set | Description |
