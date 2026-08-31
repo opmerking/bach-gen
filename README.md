@@ -13,7 +13,7 @@ pip install torch numpy pandas matplotlib pretty_midi muspy music21 scipy
 
 **Run order:** `1_training.ipynb` → `2_evaluation.ipynb`
 
-Training takes ~15 minutes on a 4GB GPU. The evaluation notebook runs on CPU. `gen_chorales.json` and `Bach_model.pt` are included so the evaluation notebook can be run without training first.
+Training takes ~5 minutes on a 4GB GPU. The evaluation notebook requires `gen_chorales.json` and `Bach_model.pt`, which are included so the evaluation can be run without training first.
 
 ## Metric Validity Study
 
