@@ -76,7 +76,7 @@ Full results, interpretation, and discussion are in the [report](Report.pdf).
 ## Model optimization
 
 After completing the assignment, the model was optimized with the following changes:
-- Reworked EOS padding.
+- Reworked end-of-sequence (EOS) and padding handling. EOS completion below measures the percentage of generated chorales that produce an EOS token before reaching the generation length limit.
 - Adjusted hyperparameters: more epochs, adjusted dropout, decay, scheduler option. 
 - Context window increased from 4 to 16 bars. Stride changed from 50% to 25%.
 - Random transpositions for extra training data.
