@@ -77,7 +77,7 @@ Full results, interpretation, and discussion are in the [report](Report.pdf).
 
 After completing the assignment, the model was optimized with the following changes:
 - Reworked end-of-sequence (EOS) and padding handling.
-- Adjusted hyperparameters: more epochs, adjusted dropout and weight decay, and a scheduler option. 
+- Increased the training duration, adjusted regularisation (dropout and weight decay), and added a learning-rate scheduler option.
 - Context window increased from 4 to 16 bars. Stride changed from 50% to 25%.
 - Random transpositions for extra training data.
 - Added optional auxiliary penalties for voice crossings and fifth/octave interval violations.
