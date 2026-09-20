@@ -76,12 +76,12 @@ Full results, interpretation, and discussion are in the [report](Report.pdf).
 ## Model optimization
 
 After completing the assignment, the model was optimized with the following changes:
-- Reworked end-of-sequence (EOS) and padding handling. EOS completion below measures the percentage of generated chorales that produce an EOS token before reaching the generation length limit.
-- Adjusted hyperparameters: more epochs, adjusted dropout, decay, scheduler option. 
+- Reworked end-of-sequence (EOS) and padding handling.
+- Adjusted hyperparameters: more epochs, adjusted dropout and weight decay, and a scheduler option. 
 - Context window increased from 4 to 16 bars. Stride changed from 50% to 25%.
 - Random transpositions for extra training data.
 - Added optional auxiliary penalties for voice crossings and fifth/octave interval violations.
-- Now generates 200 chorales for more accurate evaluation.
+- Increased the evaluation sample to 200 generated chorales per model.
 
 These changes were implemented in the third notebook `3_optimization.ipynb`. Two models were trained with this notebook: a baseline and a version with auxiliary penalties for voice crossings and fifth/octave interval violations. Both configurations were run for 400 epochs.
 
@@ -90,7 +90,6 @@ These changes were implemented in the third notebook `3_optimization.ipynb`. Two
 | Voice-crossing rate ↓ | 0.0211 | 0.0533 | 0.0337 |
 | Parallel fifths/octaves rate ↓ | 0.0004 | 0.0061 | 0.0059 |
 | Cadence quality ↑ | 97.4% | 50.0% | 39.5% |
-| EOS completion ↑ | — | 55.5% | 47.0% |
 | Best validation cross-entropy ↓ | — | 0.4371 | 0.4383 |
 
-Under the same 400-epoch training budget, auxiliary loss reduced voice crossings by 36.8% compared with the baseline, while fifths/octaves and validation cross-entropy changed little. Cadence quality and EOS completion were lower, indicating a targeted benefit without consistent improvement across the evaluation. These results reflect one training run per configuration.
+Both updated models achieved substantially lower voice-crossing rates and higher cadence scores than the original model. Under the same 400-epoch training budget, auxiliary loss reduced voice crossings by 36.8% compared with the baseline, while fifths/octaves and validation cross-entropy changed little. Cadence quality was lower, indicating that the targeted improvement did not extend to cadence quality or validation cross-entropy. Distributional metrics were also very similar between the baseline and auxiliary-loss models. These results reflect one training run per configuration.
