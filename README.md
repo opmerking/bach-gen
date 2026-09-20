@@ -2,6 +2,8 @@
 
 This project aims to investigate the validity of evaluation metrics in generative music literature. To do so, a small decoder-only transformer (~1.85M parameters) is trained on Johann Sebastian Bach chorales and evaluated on commonly used MusPy-based distributional metrics, as well as rule-based metrics predicated on conventions in historical counterpoint, which are introduced for this study. These metrics are tested on real Bach chorales, a set of shuffled Bach chorales that is created to test the metrics on their ability to distinguish sequential continuity, and a set of chorales generated with a small transformer trained on real Bach. Finally, an optimized version of the model was created.
 
+*This work was completed as Assignment 3 for the course Generative Artificial Intelligence at the Open University of the Netherlands, and received a grade of **9.0/10**.*
+
 ## Setup
 
 **Dataset:** Download `jsb-chorales-16th.pkl` from [czhuang/JSB-Chorales-dataset](https://github.com/czhuang/JSB-Chorales-dataset) and place it in the repo root.
@@ -70,8 +72,6 @@ Effect sizes reported as rank-biserial correlation |*r*|. Bold = significant aft
 | Cadence (Fisher's) | **0.001** | – | **< 0.001** | – |
 
 Full results, interpretation, and discussion are in the [report](Report.pdf).
-
-*This work was completed as Assignment 3 for the course Generative Artificial Intelligence at the Open University of the Netherlands, and received a grade of **9.0/10**.*
 
 ## Model optimization
 
