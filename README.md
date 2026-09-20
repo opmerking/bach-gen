@@ -1,6 +1,6 @@
 # bach-gen
 
-This project aims to investigate the validity of evaluation metrics in generative music literature. To do so, a small decoder-only transformer (~1.85M parameters) is trained on Johann Sebastian Bach chorales and evaluated on commonly used MusPy-based distributional metrics, as well as rule-based metrics predicated on conventions in historical counterpoint, which are introduced for this study. These metrics are tested on real Bach chorales, a set of shuffled Bach chorales that is created to test the metrics on their ability to distinguish sequential continuity, and a set of chorales generated with a small transformer trained on real Bach. 
+This project aims to investigate the validity of evaluation metrics in generative music literature. To do so, a small decoder-only transformer (~1.85M parameters) is trained on Johann Sebastian Bach chorales and evaluated on commonly used MusPy-based distributional metrics, as well as rule-based metrics predicated on conventions in historical counterpoint, which are introduced for this study. These metrics are tested on real Bach chorales, a set of shuffled Bach chorales that is created to test the metrics on their ability to distinguish sequential continuity, and a set of chorales generated with a small transformer trained on real Bach. Finally, an optimized version of the model was created.
 
 ## Setup
 
@@ -14,6 +14,8 @@ pip install torch numpy pandas matplotlib pretty_midi muspy music21 scipy
 **Run order:** `1_training.ipynb` → `2_evaluation.ipynb`
 
 Training takes ~5 minutes on a 4GB GPU. The evaluation notebook requires `gen_chorales.json` and `Bach_model.pt`, which are included so the evaluation can be run without training first.
+
+Training the optimized model can be done with `3_optimization.ipynb`, and takes about an hour and a half on a 4GB GPU. The optimized model can be evaluated with `2_evaluation.ipynb`, with the hyperparameters changed to match the new training configuration.
 
 ## Metric Validity Study
 
@@ -37,7 +39,7 @@ Three test sets are compared:
 
 ### Results
 
-Distributional metrics were found to be unable to distinguish real Bach from the shuffled set (*p* ≈ 1 for all four), and to have a relatively small effect size when comparing real Bach to the generated set. Rule-based metrics, by contrast, show strong discriminative power with effect sizes up to *r* = 0.85. 
+Distributional metrics were found to be unable to distinguish real Bach from the shuffled set (no statistically significant differences for any of the four), and to have a relatively small effect size when comparing real Bach to the generated set. Rule-based metrics, by contrast, show strong discriminative power with effect sizes up to *r* = 0.85. 
 
 | Metric | Real Bach | Shuffled | Generated |
 |---|---|---|---|
@@ -70,3 +72,25 @@ Effect sizes reported as rank-biserial correlation |*r*|. Bold = significant aft
 Full results, interpretation, and discussion are in the [report](Report.pdf).
 
 *This work was completed as Assignment 3 for the course Generative Artificial Intelligence at the Open University of the Netherlands, and received a grade of **9.0/10**.*
+
+## Model optimization
+
+After completing the assignment, the model was optimized with the following changes:
+- Reworked EOS padding.
+- Adjusted hyperparameters: more epochs, adjusted dropout, decay, scheduler option. 
+- Context window increased from 4 to 16 bars. Stride changed from 50% to 25%.
+- Random transpositions for extra training data.
+- Added optional auxiliary penalties for voice crossings and fifth/octave interval violations.
+- Now generates 200 chorales for more accurate evaluation.
+
+These changes were implemented in the third notebook `3_optimization.ipynb`. Two models were trained with this notebook: a baseline and a version with auxiliary penalties for voice crossings and fifth/octave interval violations. Both configurations were run for 400 epochs.
+
+| Metric | Real Bach | Baseline | Auxiliary loss |
+|---|---:|---:|---:|
+| Voice-crossing rate ↓ | 0.0211 | 0.0533 | 0.0337 |
+| Parallel fifths/octaves rate ↓ | 0.0004 | 0.0061 | 0.0059 |
+| Cadence quality ↑ | 97.4% | 50.0% | 39.5% |
+| EOS completion ↑ | — | 55.5% | 47.0% |
+| Best validation cross-entropy ↓ | — | 0.4371 | 0.4383 |
+
+Under the same 400-epoch training budget, auxiliary loss reduced voice crossings by 36.8% compared with the baseline, while fifths/octaves and validation cross-entropy changed little. Cadence quality and EOS completion were lower, indicating a targeted benefit without consistent improvement across the evaluation. These results reflect one training run per configuration.
